@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
@@ -6,43 +5,36 @@ import CreateTracking from './CreateTracking.jsx'
 
 function App() {
 	const [tracks, setTracks] = useState([])
-	const telegramId = '494274334' // используйте свой Telegram ID для тестирования
 
 	useEffect(() => {
 		const fetchTracks = async () => {
+			const initData = window.Telegram.WebApp.initData // Получение init data от Telegram
 			try {
 				const response = await fetch(
-					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`,
+					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${initData.user.id}/tracks`, // Используйте user.id из initData
 					{
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
+							Authorization: `Bearer ${initData.auth_date}`, // Пример использования auth_date как токена (замените на ваш токен)
 						},
 					}
 				)
 
 				if (!response.ok) {
-					throw new Error(`Error: ${response.statusText}`)
+					throw new Error(`HTTP status ${response.status}`)
 				}
 
 				const data = await response.json()
 				console.log('Tracks fetched:', data)
-				if (!Array.isArray(data) || !data.length) {
-					console.error('Data is not an array or empty:', data)
-					setTracks([])
-				} else {
-					setTracks(data)
-				}
-
-				console.log('Tracks fetched:', data)
 				setTracks(data)
 			} catch (error) {
-				console.error('Error fetching tracks:', error.message)
+				console.error('Error fetching tracks:', error)
 			}
 		}
 
 		fetchTracks()
-	}, [telegramId])
+	}, [])
 
 	return (
 		<Router>
@@ -53,7 +45,7 @@ function App() {
 							<h2>Tracked options:</h2>
 							<hr className='separator' />
 							<ul className='options-list'>
-								{Array.isArray(tracks) && tracks.length > 0 ? (
+								{tracks.length > 0 ? (
 									tracks.map((track, index) => (
 										<li key={index}>
 											Asset: {track.asset}, Expiry Date: {track.expiryDate},
