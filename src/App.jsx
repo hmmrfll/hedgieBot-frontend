@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
@@ -25,6 +26,14 @@ function App() {
 				}
 
 				const data = await response.json()
+				console.log('Tracks fetched:', data)
+				if (!Array.isArray(data) || !data.length) {
+					console.error('Data is not an array or empty:', data)
+					setTracks([])
+				} else {
+					setTracks(data)
+				}
+
 				console.log('Tracks fetched:', data)
 				setTracks(data)
 			} catch (error) {
