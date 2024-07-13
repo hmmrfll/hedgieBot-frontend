@@ -1,4 +1,5 @@
 import axios from 'axios'
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import './CreateTracking.css'
@@ -190,6 +191,7 @@ const CreateTracking = () => {
 			const data = await response.json()
 			alert('Track added successfully')
 			console.log('Response data:', data)
+			history.push('/') // Перенаправляем пользователя на основной экран после закрытия уведомления
 		} catch (error) {
 			console.error('Error adding track:', error.message)
 			setError(`Error adding track: ${error.message}`)
