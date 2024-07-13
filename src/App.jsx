@@ -8,21 +8,25 @@ import CreateTracking from './CreateTracking.jsx'
 
 function App() {
 	const [tracks, setTracks] = useState([])
-	const telegramId = window.Telegram.WebApp.initDataUnsafe.user.id
 
 	useEffect(() => {
 		const fetchTracks = async () => {
 			try {
 				const response = await axios.get(
-					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`
+					'https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/494274334/tracks'
 				)
-				setTracks(response.data)
+				if (Array.isArray(response.data)) {
+					console.log('Tracks fetched:', response.data)
+					setTracks(response.data)
+				} else {
+					console.error('Unexpected response data:', response.data)
+				}
 			} catch (error) {
 				console.error('Error fetching tracks:', error)
 			}
 		}
 		fetchTracks()
-	}, [telegramId])
+	}, [])
 
 	return (
 		<Router>
@@ -33,15 +37,19 @@ function App() {
 							<h2>Tracked options:</h2>
 							<hr className='separator' />
 							<ul className='options-list'>
-								{tracks.map((track, index) => (
-									<li key={index}>
-										Asset: {track.asset}, Expiry Date: {track.expiryDate},
-										Strike Price: {track.strikePrice}, Option Type:{' '}
-										{track.optionType}, Option Price: {track.optionPrice},
-										Notification Price: {track.notificationPrice}, Percent
-										Change: {track.percentChange}
-									</li>
-								))}
+								{Array.isArray(tracks) && tracks.length > 0 ? (
+									tracks.map((track, index) => (
+										<li key={index}>
+											Asset: {track.asset}, Expiry Date: {track.expiryDate},
+											Strike Price: {track.strikePrice}, Option Type:{' '}
+											{track.optionType}, Option Price: {track.optionPrice},
+											Notification Price: {track.notificationPrice}, Percent
+											Change: {track.percentChange}
+										</li>
+									))
+								) : (
+									<li>No tracks found</li>
+								)}
 							</ul>
 							<Link to='/create-tracking' className='link-button'>
 								<button className='create-tracking-button'>
