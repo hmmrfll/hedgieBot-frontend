@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import axios from 'axios'
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
@@ -8,25 +5,35 @@ import CreateTracking from './CreateTracking.jsx'
 
 function App() {
 	const [tracks, setTracks] = useState([])
+	const telegramId = '494274334' // используйте свой Telegram ID для тестирования
 
 	useEffect(() => {
 		const fetchTracks = async () => {
 			try {
-				const response = await axios.get(
-					'https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/494274334/tracks'
+				const response = await fetch(
+					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`,
+					{
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					}
 				)
-				if (Array.isArray(response.data)) {
-					console.log('Tracks fetched:', response.data)
-					setTracks(response.data)
-				} else {
-					console.error('Unexpected response data:', response.data)
+
+				if (!response.ok) {
+					throw new Error(`Error: ${response.statusText}`)
 				}
+
+				const data = await response.json()
+				console.log('Tracks fetched:', data)
+				setTracks(data)
 			} catch (error) {
-				console.error('Error fetching tracks:', error)
+				console.error('Error fetching tracks:', error.message)
 			}
 		}
+
 		fetchTracks()
-	}, [])
+	}, [telegramId])
 
 	return (
 		<Router>
