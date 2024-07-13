@@ -1,4 +1,6 @@
 // eslint-disable-next-line no-unused-vars
+import axios from 'axios'
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
@@ -6,22 +8,21 @@ import CreateTracking from './CreateTracking.jsx'
 
 function App() {
 	const [tracks, setTracks] = useState([])
+	const telegramId = window.Telegram.WebApp.initDataUnsafe.user.id
 
 	useEffect(() => {
-		const telegramId = window.Telegram.WebApp.initDataUnsafe.user.id
 		const fetchTracks = async () => {
 			try {
-				const response = await fetch(
+				const response = await axios.get(
 					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`
 				)
-				const data = await response.json()
-				setTracks(data)
+				setTracks(response.data)
 			} catch (error) {
 				console.error('Error fetching tracks:', error)
 			}
 		}
 		fetchTracks()
-	}, [])
+	}, [telegramId])
 
 	return (
 		<Router>
