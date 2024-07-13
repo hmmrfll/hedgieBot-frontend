@@ -175,7 +175,7 @@ const CreateTracking = () => {
 
 		try {
 			const response = await fetch(
-				`http://localhost:5001/api/tracking/${telegramId}/tracks`,
+				`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`,
 				{
 					method: 'POST',
 					headers: {
