@@ -1,0 +1,43 @@
+/* src/index.css */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: var(--tg-theme-bg-color);
+}
+
+h1,
+h2 {
+	text-align: center;
+	color: var(--tg-theme-text-color);
+}
+
+div {
+	padding: 20px;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+li {
+	background: var(--tg-theme-secondary-bg-color);
+	margin: 10px 0;
+	padding: 10px;
+	border: 1px solid var(--tg-theme-section-separator-color);
+}
+
+button {
+	display: block;
+	margin: 20px auto;
+	padding: 10px 20px;
+	background: var(--tg-theme-button-color);
+	color: var(--tg-theme-button-text-color);
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background: var(--tg-theme-link-color);
+}

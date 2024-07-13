@@ -1,0 +1,51 @@
+.app-container {
+	font-family: Arial, sans-serif;
+	background-color: var(--tg-theme-bg-color);
+	color: var(--tg-theme-text-color);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.home-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 600px;
+	width: 100%;
+}
+
+.separator {
+	width: 100%;
+	border-bottom: 1px solid var(--tg-theme-section-separator-color);
+	margin: 20px 0;
+}
+
+.options-list {
+	list-style: none;
+	padding: 0;
+	width: 100%;
+}
+
+.link-button {
+	text-decoration: none;
+}
+
+.create-tracking-button {
+	width: 100%;
+	padding: 10px 20px;
+	font-size: 16px;
+	color: var(--tg-theme-button-text-color);
+	background-color: var(--tg-theme-button-color);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.create-tracking-button:hover {
+	background-color: var(--tg-theme-link-color);
+}

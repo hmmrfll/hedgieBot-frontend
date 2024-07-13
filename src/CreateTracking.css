@@ -1,0 +1,101 @@
+/* src/CreateTracking.css */
+.create-tracking-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	height: 100vh;
+	box-sizing: border-box;
+	background-color: var(--tg-theme-bg-color);
+	color: var(--tg-theme-text-color);
+	width: 100%;
+}
+
+.header {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	width: 100%;
+	max-width: 100%; /* Устанавливаем на полную ширину */
+	margin: 0;
+	padding: 0 10px;
+}
+
+.back-button {
+	padding: 5px 10px;
+	font-size: 12px;
+	color: var(--tg-theme-button-text-color);
+	background-color: var(--tg-theme-button-color);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	justify-self: start;
+}
+
+.back-button:hover {
+	background-color: var(--tg-theme-link-color);
+}
+
+.header h2 {
+	color: var(--tg-theme-text-color);
+	margin: 0;
+	text-align: center;
+	justify-self: center;
+	grid-column: 1 / -1;
+}
+
+.separator {
+	width: 100%;
+	border-bottom: 1px solid var(--tg-theme-section-separator-color);
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+	width: 100%;
+	max-width: 100%; /* Устанавливаем на полную ширину */
+}
+
+.form-group label {
+	margin-bottom: 5px;
+	color: var(--tg-theme-text-color);
+}
+
+.form-group select,
+.form-group input {
+	padding: 8px;
+	box-sizing: border-box;
+	border: 1px solid var(--tg-theme-section-separator-color);
+	border-radius: 5px;
+	background-color: var(--tg-theme-input-bg-color);
+	color: var(--tg-theme-text-color);
+	width: 100%; /* Устанавливаем на полную ширину */
+}
+
+.form-group div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 5px;
+}
+
+.create-tracking-button {
+	width: 100%;
+	padding: 10px 20px;
+	font-size: 16px;
+	color: var(--tg-theme-button-text-color);
+	background-color: var(--tg-theme-button-color);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-top: 10px;
+	margin-bottom: 60px;
+}
+
+.create-tracking-button:hover {
+	background-color: var(--tg-theme-link-color);
+}
