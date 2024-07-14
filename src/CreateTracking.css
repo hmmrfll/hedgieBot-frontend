@@ -68,10 +68,7 @@
 
 .form-group select,
 .form-group input {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
+	padding: 12px;
 	box-sizing: border-box;
 	border: 1px solid var(--tg-theme-section-separator-color);
 	border-radius: 5px;
