@@ -6,23 +6,60 @@ import CreateTracking from './CreateTracking.jsx'
 
 function Home() {
 	const [options, setOptions] = useState([])
-	const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
+	const telegramId = window.Telegram.WebApp.initDataUnsafe.user.id
 
 	useEffect(() => {
-		const fetchOptions = async () => {
-			if (!telegramId) {
-				console.error('Telegram ID not found')
-				return
-			}
+		const fetchAndStoreOptions = async () => {
 			try {
-				const response = await axios.get(`/api/tracking/${telegramId}/tracks`)
-				setOptions(response.data)
+				// Шаг 1: Получение данных из базы данных
+				const response = await axios.get(
+					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`
+				)
+				const data = response.data
+
+				// Шаг 2: Сохранение данных в CloudStorage
+				const promises = data.map(
+					(item, index) =>
+						new Promise((resolve, reject) => {
+							window.Telegram.WebApp.CloudStorage.setItem(
+								`option_${index}`,
+								item,
+								(error, success) => {
+									if (error) {
+										reject(error)
+									} else {
+										resolve(success)
+									}
+								}
+							)
+						})
+				)
+
+				await Promise.all(promises)
+
+				// Шаг 3: Получение всех ключей и значений из CloudStorage
+				window.Telegram.WebApp.CloudStorage.getKeys((error, keys) => {
+					if (error) {
+						console.error('Error retrieving keys:', error)
+					} else {
+						window.Telegram.WebApp.CloudStorage.getItems(
+							keys,
+							(error, items) => {
+								if (error) {
+									console.error('Error retrieving items:', error)
+								} else {
+									setOptions(Object.values(items))
+								}
+							}
+						)
+					}
+				})
 			} catch (err) {
-				console.error('Error fetching tracks:', err)
+				console.error('Error fetching or storing tracks:', err)
 			}
 		}
 
-		fetchOptions()
+		fetchAndStoreOptions()
 	}, [telegramId])
 
 	return (
