@@ -53,9 +53,10 @@
 .form-group {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 20px; /* Увеличиваем отступы между группами форм */
+	align-items: center; /* Добавлено для центрирования */
+	margin-bottom: 20px;
 	width: 100%;
-	max-width: 600px; /* Ограничиваем ширину для центрирования */
+	max-width: 600px;
 }
 
 .form-group label {
@@ -66,14 +67,15 @@
 
 .form-group select,
 .form-group input {
-	padding: 12px; /* Увеличиваем отступы внутри полей ввода */
+	padding: 12px;
 	box-sizing: border-box;
 	border: 1px solid var(--tg-theme-section-separator-color);
 	border-radius: 5px;
 	background-color: var(--tg-theme-input-bg-color);
 	color: var(--tg-theme-text-color);
 	width: 100%;
-	font-size: 16px; /* Увеличиваем размер текста в полях ввода */
+	font-size: 16px;
+	text-align: center; /* Добавлено для центрирования текста */
 }
 
 .form-group div {
