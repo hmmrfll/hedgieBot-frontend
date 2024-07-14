@@ -1,5 +1,4 @@
 import axios from 'axios'
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import './CreateTracking.css'
@@ -191,6 +190,21 @@ const CreateTracking = () => {
 			const data = await response.json()
 			alert('Track added successfully')
 			console.log('Response data:', data)
+
+			// Сохранение данных в Cloud Storage
+			const cloudKey = `track_${Date.now()}`
+			window.Telegram.WebApp.CloudStorage.setItem(
+				cloudKey,
+				JSON.stringify(newTrack),
+				(error, success) => {
+					if (error) {
+						console.error('Error storing item in Cloud Storage:', error)
+					} else {
+						console.log('Item stored successfully in Cloud Storage:', success)
+					}
+				}
+			)
+
 			history.push('/') // Перенаправляем пользователя на основной экран после закрытия уведомления
 		} catch (error) {
 			console.error('Error adding track:', error.message)
