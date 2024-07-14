@@ -1,4 +1,3 @@
-/* src/CreateTracking.css */
 .create-tracking-container {
 	display: flex;
 	flex-direction: column;
@@ -16,14 +15,14 @@
 	grid-template-columns: auto 1fr auto;
 	align-items: center;
 	width: 100%;
-	max-width: 100%; /* Устанавливаем на полную ширину */
+	max-width: 600px; /* Ограничиваем ширину для центрирования */
 	margin: 0;
 	padding: 0 10px;
 }
 
 .back-button {
-	padding: 5px 10px;
-	font-size: 12px;
+	padding: 10px 20px; /* Увеличиваем размер кнопки */
+	font-size: 14px; /* Увеличиваем размер текста */
 	color: var(--tg-theme-button-text-color);
 	background-color: var(--tg-theme-button-color);
 	border: none;
@@ -54,25 +53,27 @@
 .form-group {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 10px;
+	margin-bottom: 20px; /* Увеличиваем отступы между группами форм */
 	width: 100%;
-	max-width: 100%; /* Устанавливаем на полную ширину */
+	max-width: 600px; /* Ограничиваем ширину для центрирования */
 }
 
 .form-group label {
-	margin-bottom: 5px;
+	margin-bottom: 10px; /* Увеличиваем отступ между меткой и полем ввода */
 	color: var(--tg-theme-text-color);
+	font-size: 16px; /* Увеличиваем размер текста метки */
 }
 
 .form-group select,
 .form-group input {
-	padding: 8px;
+	padding: 12px; /* Увеличиваем отступы внутри полей ввода */
 	box-sizing: border-box;
 	border: 1px solid var(--tg-theme-section-separator-color);
 	border-radius: 5px;
 	background-color: var(--tg-theme-input-bg-color);
 	color: var(--tg-theme-text-color);
-	width: 100%; /* Устанавливаем на полную ширину */
+	width: 100%;
+	font-size: 16px; /* Увеличиваем размер текста в полях ввода */
 }
 
 .form-group div {
@@ -84,15 +85,15 @@
 
 .create-tracking-button {
 	width: 100%;
-	padding: 10px 20px;
-	font-size: 16px;
+	padding: 15px 20px; /* Увеличиваем отступы внутри кнопки */
+	font-size: 18px; /* Увеличиваем размер текста */
 	color: var(--tg-theme-button-text-color);
 	background-color: var(--tg-theme-button-color);
 	border: none;
 	border-radius: 10px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-	margin-top: 10px;
+	margin-top: 20px; /* Увеличиваем отступ сверху */
 	margin-bottom: 60px;
 }
 
