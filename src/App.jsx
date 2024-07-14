@@ -5,6 +5,8 @@ import CreateTracking from './CreateTracking.jsx'
 
 function App() {
 	const [trackedOptions, setTrackedOptions] = useState([])
+	const [selectedOptions, setSelectedOptions] = useState([])
+	const [isDeleteMode, setIsDeleteMode] = useState(false)
 
 	useEffect(() => {
 		// Получение всех ключей из CloudStorage
@@ -17,7 +19,10 @@ function App() {
 					if (error) {
 						console.error('Error retrieving items from Cloud Storage:', error)
 					} else {
-						const options = Object.values(items).map(item => JSON.parse(item))
+						const options = Object.keys(items).map(key => ({
+							key,
+							...JSON.parse(items[key]),
+						}))
 						setTrackedOptions(options)
 					}
 				})
@@ -25,17 +30,77 @@ function App() {
 		})
 	}, [])
 
+	const handleDeleteClick = () => {
+		setIsDeleteMode(!isDeleteMode)
+		setSelectedOptions([])
+	}
+
+	const handleOptionSelect = key => {
+		setSelectedOptions(prev =>
+			prev.includes(key) ? prev.filter(item => item !== key) : [...prev, key]
+		)
+	}
+
+	const handleDeleteConfirm = () => {
+		const promises = selectedOptions.map(
+			key =>
+				new Promise((resolve, reject) => {
+					window.Telegram.WebApp.CloudStorage.removeItem(
+						key,
+						(error, success) => {
+							if (error) {
+								reject(error)
+							} else {
+								resolve(success)
+							}
+						}
+					)
+				})
+		)
+
+		Promise.all(promises)
+			.then(() => {
+				setTrackedOptions(
+					trackedOptions.filter(option => !selectedOptions.includes(option.key))
+				)
+				setIsDeleteMode(false)
+			})
+			.catch(error => {
+				console.error('Error removing items from Cloud Storage:', error)
+			})
+	}
+
 	return (
 		<Router>
 			<div className='app-container'>
 				<Switch>
 					<Route exact path='/'>
 						<div className='home-content'>
-							<h2>Tracked options:</h2>
+							<div className='header'>
+								<h2>Tracked options:</h2>
+								<button className='delete-button' onClick={handleDeleteClick}>
+									{isDeleteMode ? 'Cancel' : 'Delete'}
+								</button>
+							</div>
 							<hr className='separator' />
+							{isDeleteMode && (
+								<button
+									className='confirm-delete-button'
+									onClick={handleDeleteConfirm}
+								>
+									Confirm Delete
+								</button>
+							)}
 							<ul className='options-list'>
-								{trackedOptions.map((option, index) => (
-									<li key={index}>
+								{trackedOptions.map(option => (
+									<li key={option.key} className='option-item'>
+										{isDeleteMode && (
+											<input
+												type='checkbox'
+												checked={selectedOptions.includes(option.key)}
+												onChange={() => handleOptionSelect(option.key)}
+											/>
+										)}
 										Asset: {option.asset}, Expiry Date: {option.expiryDate},
 										Strike Price: {option.strikePrice}, Option Type:{' '}
 										{option.optionType}, Option Price: {option.optionPrice},

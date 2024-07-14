@@ -49,3 +49,36 @@
 .create-tracking-button:hover {
 	background-color: var(--tg-theme-link-color);
 }
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.delete-button,
+.confirm-delete-button {
+	margin-left: 10px;
+	padding: 5px 10px;
+	color: var(--tg-theme-button-text-color);
+	background-color: var(--tg-theme-button-color);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.delete-button:hover,
+.confirm-delete-button:hover {
+	background-color: var(--tg-theme-link-color);
+}
+
+.option-item {
+	display: flex;
+	align-items: center;
+}
+
+.option-item input {
+	margin-right: 10px;
+}
