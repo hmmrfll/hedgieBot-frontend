@@ -67,7 +67,7 @@ function App() {
 					const option = trackedOptions.find(opt => opt.key === optionKey)
 					if (option) {
 						return fetch(
-							`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/users/${window.Telegram.WebApp.initDataUnsafe.user.id}/tracks/${option.index}`,
+							`/api/users/${window.Telegram.WebApp.initDataUnsafe.user.id}/tracks/${option.index}`,
 							{
 								method: 'DELETE',
 							}
