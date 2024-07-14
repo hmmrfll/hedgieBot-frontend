@@ -1,12 +1,27 @@
-// src/App.jsx
-// eslint-disable-next-line no-unused-vars
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
 import CreateTracking from './CreateTracking.jsx'
 
 function App() {
 	console.log('App component rendered')
+
+	const [options, setOptions] = useState([])
+	const telegramId = window.Telegram.WebApp.initDataUnsafe.user.id
+
+	useEffect(() => {
+		const fetchOptions = async () => {
+			try {
+				const response = await axios.get(`/api/tracking/${telegramId}/tracks`)
+				setOptions(response.data)
+			} catch (err) {
+				console.error('Error fetching tracks:', err)
+			}
+		}
+
+		fetchOptions()
+	}, [telegramId])
 
 	return (
 		<Router>
@@ -17,7 +32,11 @@ function App() {
 							{console.log('Rendering Home Page')}
 							<h2>Tracked options:</h2>
 							<hr className='separator' />
-							<ul className='options-list'></ul>
+							<ul className='options-list'>
+								{options.map((option, index) => (
+									<li key={index}>{option}</li>
+								))}
+							</ul>
 							<Link to='/create-tracking' className='link-button'>
 								<button className='create-tracking-button'>
 									Create Tracking
