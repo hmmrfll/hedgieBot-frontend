@@ -13,7 +13,9 @@ function App() {
 	useEffect(() => {
 		const fetchOptions = async () => {
 			try {
-				const response = await axios.get(`/api/tracking/${telegramId}/tracks`)
+				const response = await axios.get(
+					`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks`
+				)
 				setOptions(response.data)
 			} catch (err) {
 				console.error('Error fetching tracks:', err)
