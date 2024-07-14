@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
@@ -44,6 +43,8 @@ function App() {
 	}
 
 	const handleDeleteConfirm = () => {
+		const telegramId = window.Telegram.WebApp.initDataUnsafe.user.id
+
 		const promises = selectedOptions.map(
 			key =>
 				new Promise((resolve, reject) => {
@@ -67,7 +68,7 @@ function App() {
 					const option = trackedOptions.find(opt => opt.key === optionKey)
 					if (option) {
 						return fetch(
-							`/api/users/${window.Telegram.WebApp.initDataUnsafe.user.id}/tracks/${option.index}`,
+							`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/tracking/${telegramId}/tracks/${option.index}`,
 							{
 								method: 'DELETE',
 							}
