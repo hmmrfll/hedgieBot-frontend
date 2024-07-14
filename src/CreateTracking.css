@@ -52,18 +52,19 @@
 
 .form-group {
 	display: flex;
-	flex-direction: column;
-	align-items: center; /* Центрирование элементов */
+	flex-direction: row; /* Изменено на строку */
+	align-items: center; /* Центрирование элементов по вертикали */
 	margin-bottom: 20px;
 	width: 100%;
 	max-width: 600px;
 }
 
 .form-group label {
-	margin-bottom: 10px;
+	margin-right: 10px; /* Отступ справа от метки */
 	color: var(--tg-theme-text-color);
 	font-size: 16px;
-	text-align: center; /* Центрирование текста метки */
+	text-align: left; /* Текст метки слева */
+	width: 30%; /* Задаем фиксированную ширину для метки */
 }
 
 .form-group select,
@@ -74,9 +75,9 @@
 	border-radius: 5px;
 	background-color: var(--tg-theme-input-bg-color);
 	color: var(--tg-theme-text-color);
-	width: 100%;
+	width: 70%; /* Задаем ширину для полей ввода */
 	font-size: 16px;
-	text-align: center; /* Центрирование текста внутри полей */
+	text-align: left; /* Текст внутри полей слева */
 }
 
 .form-group div {

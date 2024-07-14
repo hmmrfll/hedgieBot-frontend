@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react'
 import { Link, Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './App.css'
