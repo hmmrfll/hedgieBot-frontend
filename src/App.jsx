@@ -20,8 +20,9 @@ function App() {
 					if (error) {
 						console.error('Error retrieving items from Cloud Storage:', error)
 					} else {
-						const options = Object.keys(items).map(key => ({
+						const options = Object.keys(items).map((key, index) => ({
 							key,
+							index,
 							...JSON.parse(items[key]),
 						}))
 						setTrackedOptions(options)
@@ -46,6 +47,7 @@ function App() {
 		const promises = selectedOptions.map(
 			key =>
 				new Promise((resolve, reject) => {
+					// Удаление из CloudStorage
 					window.Telegram.WebApp.CloudStorage.removeItem(
 						key,
 						(error, success) => {
@@ -61,13 +63,31 @@ function App() {
 
 		Promise.all(promises)
 			.then(() => {
+				const deletionPromises = selectedOptions.map(optionKey => {
+					const option = trackedOptions.find(opt => opt.key === optionKey)
+					if (option) {
+						return fetch(
+							`https://f3d5-2a02-bf0-1413-2ebc-ed86-9e39-25f4-572a.ngrok-free.app/api/users/${window.Telegram.WebApp.initDataUnsafe.user.id}/tracks/${option.index}`,
+							{
+								method: 'DELETE',
+							}
+						).then(response => response.json())
+					}
+				})
+
+				return Promise.all(deletionPromises)
+			})
+			.then(() => {
 				setTrackedOptions(
 					trackedOptions.filter(option => !selectedOptions.includes(option.key))
 				)
 				setIsDeleteMode(false)
 			})
 			.catch(error => {
-				console.error('Error removing items from Cloud Storage:', error)
+				console.error(
+					'Error removing items from Cloud Storage or database:',
+					error
+				)
 			})
 	}
 
